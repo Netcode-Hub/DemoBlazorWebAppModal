@@ -1,0 +1,65 @@
+﻿@page "/"
+@rendermode InteractiveServer
+@using NetcodeHub.Packages.Components.Modal
+<PageTitle>Home</PageTitle>
+<button class="btn btn-danger" @onclick="ShowConfirmation"> Show Confirmation</button>
+<button class="btn btn-info" @onclick="OpenModal">Open modal</button>
+<br />
+Selected Action: @SelectedAction
+<br />
+Confirmation : @Confirm
+<Confirmation @ref="confirmation"
+              Instruction="@Instruction"
+              Action="Action"
+              BoostrapClass="border-danger"
+              CustomStyle="width:300px" />
+
+
+
+<Modal Actions="ButtonActions"
+       BootstrapClass="border-success" 
+    CustomStyle="width:400px"
+       @bind-Open="IsOpen">
+
+    <ContentContent>
+        <p class="text-center text-muted">
+            The component was built using modal dialog. We are manipulating it using CSS and JS,
+            This element provides what we want to display a modal and get a return value of type string.
+        </p>
+    </ContentContent>
+    <ButtonTemplate>
+        <div class="d-flex justify-content-center align-content-center">
+            <button class="btn btn-success btn-sm" value="ok" style="margin-right:5px">Okay</button>
+            <button class="btn btn-danger btn-sm" value="cancel">Cancel</button>
+        </div>
+    </ButtonTemplate>
+</Modal>
+@code {
+    public bool IsOpen { get; set; }
+    public string? SelectedAction { get; set; }
+    public bool Confirm { get; set; }
+    Confirmation? confirmation;
+    public string? Instruction { get; set; } = "Confirm for User deletion";
+    void Action()
+    {
+        // perform database operation such as delete
+    }
+
+    void ShowConfirmation() => confirmation.Show();
+
+
+    void ButtonActions(string action)
+    {
+        SelectedAction = action;
+        if (action == "ok")
+        {
+            // do something
+        }
+        else if (action == "cancel")
+        {
+            // you can also do something
+        }
+    }
+
+    void OpenModal() => IsOpen = true;
+}
